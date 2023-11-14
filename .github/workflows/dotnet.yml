@@ -44,7 +44,7 @@ jobs:
       uses: OctopusDeploy/create-zip-package-action@v3
       with:
         package_id: 'PocGithubActionsOctopus'
-        version: '1.0.{{ steps.datetime.outputs.year }}.{{ steps.datetime.outputs.date }}'
+        version: '1.0.${{ steps.datetime.outputs.year }}.${{ steps.datetime.outputs.date }}'
         output_folder: '${{ github.workspace }}/Packaging'
         base_path: ${{ github.workspace }}/PublishedSampleWebApplication
         files: |
