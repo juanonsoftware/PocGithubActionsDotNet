@@ -28,6 +28,15 @@ jobs:
       run: dotnet build --no-restore -c Release     
     - name: Publish website
       run: dotnet publish -c Release --no-build ${{ github.workspace }}/SampleWebApplication/SampleWebApplication.csproj -o ${{ github.workspace }}/PublishedSampleWebApplication
+    - name: Create a Zip package 🐙
+      uses: OctopusDeploy/create-zip-package-action@v3
+      with:
+        package_id: 'PocGithubActionsOctopus'
+        version: '1.0.0'
+        output_folder: '${{ github.workspace }}/Packaging'
+        base_path: ${{ github.workspace }}/PublishedSampleWebApplication
+        files: |
+          **/*.*    
     - name: Install Octopus CLI 🐙
       uses: OctopusDeploy/install-octopus-cli-action@v3
       with:
