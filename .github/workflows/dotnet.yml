@@ -25,7 +25,9 @@ jobs:
     - name: Test in Debug configuration
       run: dotnet test --no-restore -c Debug --verbosity normal
     - name: Build in Release configuration
-      run: dotnet build --no-restore -c Release      
+      run: dotnet build --no-restore -c Release     
+    - name: Publish website
+      run: dotnet publish -c Release --no-build ${{ github.workspace }}/SampleWebApplication/SampleWebApplication.csproj -o ${{ github.workspace }}/PublishedSampleWebApplication
     - name: Install Octopus CLI 🐙
       uses: OctopusDeploy/install-octopus-cli-action@v3
       with:
