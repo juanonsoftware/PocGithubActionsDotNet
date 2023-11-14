@@ -41,3 +41,12 @@ jobs:
       uses: OctopusDeploy/install-octopus-cli-action@v3
       with:
         version: '*'
+    - name: Push a package to Octopus Deploy 🐙
+      uses: OctopusDeploy/push-package-action@v3
+      env:
+        OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
+        OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
+        OCTOPUS_SPACE: 'Default'
+      with:
+        packages: |
+          ${{ github.workspace }}/Packaging/*.zip     
