@@ -48,4 +48,4 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKERHUB_REPO }}:samplewebapplication-latest
+        tags: ${{ secrets.DOCKERHUB_REPO }}:samplewebapplication-latest, ${{ secrets.DOCKERHUB_REPO }}:samplewebapplication-${{ env.buildyear }}.${{ env.builddate }}
