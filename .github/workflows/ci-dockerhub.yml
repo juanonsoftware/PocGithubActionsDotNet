@@ -27,15 +27,12 @@ jobs:
   
     - name: Test in Debug configuration
       run: dotnet test --no-restore -c Debug --verbosity normal
-  
-    - name: Build in Release configuration
-      run: dotnet build --no-restore -c Release     
-
-    - name: Publish website
-      run: dotnet publish -c Release --no-build ${{ github.workspace }}/SampleWebApplication/SampleWebApplication.csproj -o ${{ github.workspace }}/PublishedSampleWebApplication
-           
+ 
     - name: "Set current date as env variable"
       run: |
           echo "buildyear=$(date +'%Y')" >> $GITHUB_ENV
           echo "builddate=$(date +'%m%d%H%M')" >> $GITHUB_ENV
+          
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
        
