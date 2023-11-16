@@ -5,9 +5,9 @@ name: Build, Test, Create image, Push to Docker Hub
 
 on:
   push:
-    branches: [ "Feature/DockerIntegrations" ]
+    branches: [ "develop" ]
   pull_request:
-    branches: [ "Feature/DockerIntegrations" ]
+    branches: [ "develop" ]
 
 jobs:
   build:
@@ -48,4 +48,4 @@ jobs:
         context: .
         file: ./Dockerfile
         push: true
-        tags: ${{ secrets.DOCKERHUB_REPO }}:samplewebapplication-latest, ${{ secrets.DOCKERHUB_REPO }}:samplewebapplication-${{ env.buildyear }}.${{ env.builddate }}
+        tags: ${{ secrets.DOCKERHUB_REPO }}:samplewebapplication-develop-latest, ${{ secrets.DOCKERHUB_REPO }}:samplewebapplication-develop-${{ env.buildyear }}-${{ env.builddate }}
