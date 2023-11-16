@@ -5,9 +5,9 @@ name: Build, Test, Create image, Push to Docker Hub
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "Feature/DockerIntegrations" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "Feature/DockerIntegrations" ]
 
 jobs:
   build:
@@ -38,28 +38,4 @@ jobs:
       run: |
           echo "buildyear=$(date +'%Y')" >> $GITHUB_ENV
           echo "builddate=$(date +'%m%d%H%M')" >> $GITHUB_ENV
-      
-    - name: Create a Zip package 🐙
-      uses: OctopusDeploy/create-zip-package-action@v3
-      with:
-        package_id: 'PocGithubActionsOctopus'
-        version: '1.0.${{ env.buildyear }}.${{ env.builddate }}'
-        output_folder: '${{ github.workspace }}/Packaging'
-        base_path: ${{ github.workspace }}/PublishedSampleWebApplication
-        files: |
-          **/*.*    
-          
-    - name: Install Octopus CLI 🐙
-      uses: OctopusDeploy/install-octopus-cli-action@v3
-      with:
-        version: '*'
-      
-    - name: Push a package to Octopus Deploy 🐙
-      uses: OctopusDeploy/push-package-action@v3
-      env:
-        OCTOPUS_URL: ${{ secrets.OCTOPUS_URL }}
-        OCTOPUS_API_KEY: ${{ secrets.OCTOPUS_API_KEY }}
-        OCTOPUS_SPACE: 'Default'
-      with:
-        packages: |
-          ${{ github.workspace }}/Packaging/*.zip     
+       
