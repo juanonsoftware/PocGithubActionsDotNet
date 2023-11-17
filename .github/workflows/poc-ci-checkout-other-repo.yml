@@ -1,4 +1,4 @@
-name: Checkout Other Repo
+name: POC - Checkout Other Repo
 on:
   workflow_dispatch:
 jobs:  
