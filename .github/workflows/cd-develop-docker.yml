@@ -10,9 +10,9 @@ jobs:
       DOCKER_IMAGE: mydockeruniversity/pocgithubactions:samplewebapplication-develop-latest
     steps:
       - name: Stop current container
-        run: docker stop samplewebapplication-develop-latest || true
+        run: (docker stop samplewebapplication-develop-latest) -or ($true)
       - name: Remove current container
-        run: docker remove samplewebapplication-develop-latest || true
+        run: (docker remove samplewebapplication-develop-latest) -or ($true)
       - name: Pull docker image
         run: docker pull ${{ env.DOCKER_IMAGE }}
       - name: Start new container
