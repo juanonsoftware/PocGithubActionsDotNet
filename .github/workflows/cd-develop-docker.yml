@@ -16,6 +16,9 @@ jobs:
       CONTAINER_NAME: samplewebapplication-develop-latest
       WEBAPP_PORT: 888
     steps:
+      - name: Display build info
+        run: echo ${{ github.actor }}, ${{ github.env }}, ${{ github.ref }}
+      
       - name: Stop and remove current container
         run: |
           $result = docker container ls -a -q -f name=${{ env.CONTAINER_NAME }}
