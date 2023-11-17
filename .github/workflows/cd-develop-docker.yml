@@ -10,6 +10,7 @@ on:
 jobs:
   deploy-docker:
     runs-on: [self-hosted, Windows, X64]
+    environment: TEST
     env:
       DOCKER_IMAGE: mydockeruniversity/pocgithubactions:samplewebapplication-develop-latest
       CONTAINER_NAME: samplewebapplication-develop-latest
