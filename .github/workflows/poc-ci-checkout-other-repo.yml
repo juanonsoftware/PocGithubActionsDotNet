@@ -1,0 +1,12 @@
+name: Checkout Other Repo
+on:
+  workflow_dispatch:
+jobs:  
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+        with:
+          repository: 'actions/runner-images'
+      
