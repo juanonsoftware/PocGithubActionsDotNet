@@ -8,19 +8,21 @@ jobs:
     runs-on: [self-hosted, Windows, X64]
     env:
       DOCKER_IMAGE: mydockeruniversity/pocgithubactions:samplewebapplication-develop-latest
+      CONTAINER_NAME: samplewebapplication-develop-latest
+      WEBAPP_PORT: 888
     steps:
       - name: Stop and remove current container
         run: |
-          $result = docker container ls -a -q -f name=samplewebapplication-develop-latest
+          $result = docker container ls -a -q -f name=${{ env.CONTAINER_NAME }}
           if ($result -ne $NULL -and $result.Count -gt 0) {
-            docker container stop samplewebapplication-develop-latest
-            docker container rm samplewebapplication-develop-latest
+            docker container stop ${{ env.CONTAINER_NAME }}
+            docker container rm ${{ env.CONTAINER_NAME }}
           }
           
       - name: Pull docker image
         run: docker pull ${{ env.DOCKER_IMAGE }}
         
       - name: Start new container
-        run: docker run -p 888:80 --name samplewebapplication-develop-latest ${{ env.DOCKER_IMAGE }}
+        run: docker run -d -p 888:80 --name samplewebapplication-develop-latest ${{ env.DOCKER_IMAGE }}
         
     
