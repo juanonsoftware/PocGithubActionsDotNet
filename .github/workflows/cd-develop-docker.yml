@@ -2,6 +2,7 @@
 name: cd-develop-docker
 
 on: 
+  workflow_dispatch:
   workflow_run:
     workflows: ["ci-develop-dockerhub"]
     types:
