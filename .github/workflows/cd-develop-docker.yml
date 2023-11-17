@@ -1,1 +1,21 @@
 # Deploy pull and deploy docker image
+name: cd-develop-docker
+on: 
+  push:
+  workflow_dispatch:
+jobs:
+  deploy-docker:
+    runs-on: [self-hosted, Windows, X64]
+    env:
+      DOCKER_IMAGE: mydockeruniversity/pocgithubactions:samplewebapplication-develop-latest
+    steps:
+      - name: Stop current container
+        run: docker stop samplewebapplication-develop-latest
+      - name: Remove current container
+        run: docker remove samplewebapplication-develop-latest
+      - name: Pull docker image
+        run: docker pull ${{ env.DOCKER_IMAGE }}
+      - name: Start new container
+        run: docker run -p 888:80 --name samplewebapplication-develop-latest ${{ env.DOCKER_IMAGE }}
+        
+    
