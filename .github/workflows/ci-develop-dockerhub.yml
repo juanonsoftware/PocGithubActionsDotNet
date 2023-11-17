@@ -13,6 +13,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+    
+    - name: Display build info
+      run: echo actor: ${{ github.actor }}, env: ${{ github.env }}, ref: ${{ github.ref }}
  
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
