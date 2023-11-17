@@ -8,5 +8,6 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
         with:
-          repository: 'actions/runner-images'
+          repository: 'vndevpro/architecture-common'
+          token: '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'
       
