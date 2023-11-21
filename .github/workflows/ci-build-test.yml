@@ -25,10 +25,13 @@ jobs:
         dotnet-version: 7.0.x
  
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore  
   
-    - name: Test in Debug configuration
-      run: dotnet test --no-restore -c Debug --verbosity normal --logger "html;logfilename=TestResult-${{ steps.info.outputs.buildyear }}-${{ steps.info.outputs.builddate }}.html"
+    - name: Build in Debug configuration
+      run: dotnet build --no-restore -c Debug   
+      
+    - name: Run test
+      run: dotnet test --no-build --verbosity normal --logger "html;logfilename=TestResult-${{ steps.info.outputs.buildyear }}-${{ steps.info.outputs.builddate }}.html"
 
     - name: Upload test file
       uses: actions/upload-artifact@v3
@@ -36,5 +39,3 @@ jobs:
         name: TestResults-${{ steps.info.outputs.buildyear }}-${{ steps.info.outputs.builddate }}
         path: ${{ github.workspace }}/**/**/TestResult-*.html
   
-    - name: Build in Release configuration
-      run: dotnet build --no-restore -c Release     
