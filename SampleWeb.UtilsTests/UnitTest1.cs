@@ -1,3 +1,5 @@
+using Rabbit.ShortGuid;
+
 namespace SampleWeb.UtilsTests
 {
     [TestClass]
@@ -6,6 +8,8 @@ namespace SampleWeb.UtilsTests
         [TestMethod]
         public void TestMethod1()
         {
+            var guid = new GuidBase62(Guid.NewGuid());
+            Assert.IsTrue(guid.ToString().Length < 30);
         }
     }
 }
