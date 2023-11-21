@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_NUGET_URL: https://nuget.pkg.github.com/${{ GITHUB.REPOSITORY_OWNER }}/index.json
+      VERSION: 1.$(date +'%Y').$(date +'%m').$(date +'%d%H%M')
 
     steps:
     - name: Get build Info
@@ -48,7 +49,7 @@ jobs:
         path: ${{ github.workspace }}/**/**/TestResult-*.html
 
     - name: Create packages
-      run: dotnet pack --configuration Release /p:Version=${{ steps.info.outputs.buildyear }}.${{ steps.info.outputs.builddate }} -o ${{ github.workspace }}
+      run: dotnet pack --configuration Release /p:Version=${{ env.VERSION }} -o ${{ github.workspace }}
 
     - name: Push packages
       run: dotnet nuget push ${{ github.workspace }}/*.nupkg --source ${{ env.GITHUB_NUGET_URL }}  --api-key ${{ vars.GITHUBPATWRITEPACKAGES }}
