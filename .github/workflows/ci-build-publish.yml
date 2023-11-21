@@ -22,7 +22,7 @@ jobs:
       run: |
           echo "buildyear=$(date +'%Y')" >> $GITHUB_OUTPUT
           echo "builddate=$(date +'%m%d%H%M')" >> $GITHUB_OUTPUT
-          echo "version=1.$(date +'%Y').$(date +'%m').$(date +'%d%H%M')" >> $GITHUB_OUTPUT
+          echo "version=$(date +'%Y').$(date +'%m').$(date +'%d').$(date +'%H%M')" >> $GITHUB_OUTPUT
     
     - name: Checkout source
       uses: actions/checkout@v4
