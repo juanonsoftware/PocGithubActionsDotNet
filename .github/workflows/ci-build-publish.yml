@@ -14,8 +14,7 @@ jobs:
 
     runs-on: ubuntu-latest
     env:
-      GITHUB_NUGET_URL: https://nuget.pkg.github.com/${{ GITHUB.REPOSITORY_OWNER }}/index.json
-      VERSION: echo "1.$(date +'%Y').$(date +'%m').$(date +'%d%H%M')"
+      GITHUB_NUGET_URL: https://nuget.pkg.github.com/${{ GITHUB.REPOSITORY_OWNER }}/index.json      
 
     steps:
     - name: Get build Info
@@ -23,7 +22,7 @@ jobs:
       run: |
           echo "buildyear=$(date +'%Y')" >> $GITHUB_OUTPUT
           echo "builddate=$(date +'%m%d%H%M')" >> $GITHUB_OUTPUT
-    
+          echo "version=1.$(date +'%Y').$(date +'%m').$(date +'%d%H%M')" >> $GITHUB_OUTPUT
     
     - name: Checkout source
       uses: actions/checkout@v4
@@ -49,7 +48,7 @@ jobs:
         path: ${{ github.workspace }}/**/**/TestResult-*.html
 
     - name: Create packages
-      run: dotnet pack --configuration Release /p:Version=${{ env.VERSION }} -o ${{ github.workspace }}
+      run: dotnet pack --configuration Release /p:Version=${{ steps.info.outputs.version }} -o ${{ github.workspace }}
 
     - name: Push packages
       run: dotnet nuget push ${{ github.workspace }}/*.nupkg --source ${{ env.GITHUB_NUGET_URL }}  --api-key ${{ vars.GITHUBPATWRITEPACKAGES }}
