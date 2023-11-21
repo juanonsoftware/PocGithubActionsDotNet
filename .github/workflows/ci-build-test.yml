@@ -28,13 +28,13 @@ jobs:
       run: dotnet restore
   
     - name: Test in Debug configuration
-      run: dotnet test --no-restore -c Debug --verbosity normal --logger "html;logfilename=${{ github.workspace }}/TestResults-${{ steps.info.outputs.buildyear }}-${{ steps.info.outputs.builddate }}.html"
+      run: dotnet test --no-restore -c Debug --verbosity normal --logger "html;logfilename=TestResult-${{ steps.info.outputs.buildyear }}-${{ steps.info.outputs.builddate }}.html"
 
     - name: Upload test file
       uses: actions/upload-artifact@v3
       with:
         name: TestResults-${{ steps.info.outputs.buildyear }}-${{ steps.info.outputs.builddate }}
-        path: ${{ github.workspace }}/TestResults-${{ steps.info.outputs.buildyear }}-${{ steps.info.outputs.builddate }}.html
+        path: ${{ github.workspace }}/**/**/TestResult-*.html
   
     - name: Build in Release configuration
       run: dotnet build --no-restore -c Release     
