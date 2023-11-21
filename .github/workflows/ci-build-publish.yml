@@ -1,0 +1,56 @@
+# Build and publish a package to Github Packages
+
+name: ci-build-publish
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_NUGET_URL: https://nuget.pkg.github.com/${{ github.author }}/index.json
+
+    steps:
+    - name: Get build Info
+      id: info
+      run: |
+          echo "buildyear=$(date +'%Y')" >> $GITHUB_OUTPUT
+          echo "builddate=$(date +'%m%d%H%M')" >> $GITHUB_OUTPUT
+    
+    
+    - name: Checkout source
+      uses: actions/checkout@v4
+ 
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 7.0.x
+ 
+    - name: Restore dependencies
+      run: dotnet restore
+  
+    - name: Build in Debug configuration
+      run: dotnet build --no-restore -c Debug   
+      
+    - name: Run test
+      run: dotnet test --no-build --verbosity normal --logger "html;logfilename=TestResult-${{ steps.info.outputs.buildyear }}-${{ steps.info.outputs.builddate }}.html"
+
+    - name: Upload test file
+      uses: actions/upload-artifact@v3
+      with:
+        name: TestResults-${{ steps.info.outputs.buildyear }}-${{ steps.info.outputs.builddate }}
+        path: ${{ github.workspace }}/**/**/TestResult-*.html
+
+    - name: Create packages
+      run: dotnet pack --configuration Release /p:Version=${{ steps.info.outputs.buildyear }}-${{ steps.info.outputs.builddate }} -o ${{ github.workspace }}
+
+    - name: Push packages
+      run: dotnet nuget push ${{ github.workspace }}/*.nupkg --source ${{ env.GITHUB_NUGET_URL }}  --api-key ${{ variables.GITHUBPATWRITEPACKAGES }}
+
+  
