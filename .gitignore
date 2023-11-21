@@ -11,3 +11,9 @@
 /SampleWeb.Business/obj
 /SampleWeb.BusinessTests/bin/Debug/net7.0
 /SampleWeb.BusinessTests/obj
+/.vs/ProjectEvaluation
+/SampleWeb.BusinessTests/TestResults
+/SampleWeb.UtilsTests/obj
+/SampleWeb.UtilsTests/bin/Debug/net7.0
+/SampleWeb.UtilsTests/TestResults
+*.html
