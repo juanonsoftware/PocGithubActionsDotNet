@@ -51,6 +51,6 @@ jobs:
       run: dotnet pack --configuration Release /p:Version=${{ steps.info.outputs.buildyear }}-${{ steps.info.outputs.builddate }} -o ${{ github.workspace }}
 
     - name: Push packages
-      run: dotnet nuget push ${{ github.workspace }}/*.nupkg --source ${{ env.GITHUB_NUGET_URL }}  --api-key ${{ variables.GITHUBPATWRITEPACKAGES }}
+      run: dotnet nuget push ${{ github.workspace }}/*.nupkg --source ${{ env.GITHUB_NUGET_URL }}  --api-key ${{ vars.GITHUBPATWRITEPACKAGES }}
 
   
